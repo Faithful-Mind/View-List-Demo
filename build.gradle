@@ -1,0 +1,14 @@
+group 'com.imooc.milanlover'
+version '0.1.0-SNAPSHOT'
+
+apply plugin: 'war'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile 'mysql:mysql-connector-java:5.1.46'
+}
