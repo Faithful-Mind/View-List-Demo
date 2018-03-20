@@ -2,13 +2,29 @@ group 'com.imooc.milanlover'
 version '0.1.0-SNAPSHOT'
 
 apply plugin: 'war'
+apply from: 'https://raw.github.com/gretty-gradle-plugin/gretty/master/pluginScripts/gretty.plugin'
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
 
 repositories {
     mavenLocal()
+    maven {url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+    jcenter()
     mavenCentral()
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.11'
+    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
     compile 'mysql:mysql-connector-java:5.1.46'
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+gretty {
+//    port = 8081
+//    contextPath = '/MyWebApp'
+    servletContainer = "tomcat8"
+    scanDir "src/main"
+    scanInterval = 10
 }
