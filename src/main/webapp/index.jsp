@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" import="java.util.*" contentType="text/html; charset=utf-8"%>
 <%@ page import="com.imooc.milanlover.jspviewlistdemo.entity.Items"%>
 <%@ page import="com.imooc.milanlover.jspviewlistdemo.dao.ItemsDAO"%>
@@ -53,27 +54,20 @@
         <%
           ItemsDAO itemsDao = new ItemsDAO();
           ArrayList<Items> list = itemsDao.getAllItems();
-          if(list!=null&&list.size()>0)
-          {
-            for(int i=0;i<list.size();i++)
-            {
-              Items item = list.get(i);
+          request.setAttribute("list", list);
         %>
+        <c:forEach var="item" items="${list}">
         <div>
           <dl>
             <dt>
-              <a href="details.jsp?id=<%=item.getId()%>"><img src="images/<%=item.getPicture()%>" width="120" height="90" border="1"/></a>
+              <a href="details.jsp?id=${item.id}"><img src="images/${item.picture}" width="120" height="90" border="1"/></a>
             </dt>
-            <dd class="dd_name"><%=item.getName() %></dd>
-            <dd class="dd_city">产地:<%=item.getCity() %>&nbsp;&nbsp;价格:￥ <%=item.getPrice() %></dd>
+            <dd class="dd_name">${item.name}</dd>
+            <dd class="dd_city">产地:${item.city}&nbsp;&nbsp;价格:￥ ${item.price}</dd>
           </dl>
         </div>
+        </c:forEach>
         <!-- 商品循环结束 -->
-
-        <%
-            }
-          }
-        %>
       </td>
     </tr>
   </table>
