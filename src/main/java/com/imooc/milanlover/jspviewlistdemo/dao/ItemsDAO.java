@@ -111,22 +111,24 @@ public class ItemsDAO {
     }
 
     /** 获取最近浏览的前五条商品信息 */
-    public ArrayList<Items> getViewList(String recentCsv) {
+    public ArrayList<Items> getViewList(String recentIdCsv) {
         ArrayList<Items> itemsList = new ArrayList<Items>();
         int iCount = 5; // 每次返回前几条记录
-        if (recentCsv != null && recentCsv.length() > 0) {
-            String[] arr = recentCsv.split(",");
+        if (recentIdCsv != null && recentIdCsv.length() > 0) {
+            String[] recentIds = recentIdCsv.split(",");
 
-            // 倒序以获得最近 iCount 个ID （recentCsv 最后 iCount 个ID）
-            if (arr.length >= iCount) { // 如果记录大于 iCount 条，
-                for (int i = arr.length-1; i > arr.length-iCount-1; i--) {
-                    itemsList.add(getItemsById(Integer.parseInt(arr[i])));
-                }
-            } else {
-                for (int i = arr.length-1; i >= 0; i--) {
-                    itemsList.add(getItemsById(Integer.parseInt(arr[i])));
-                }
+            ArrayList<String> addedIds = new ArrayList<>(); // for dedup
+
+            // 倒序以获得最近 iCount 个不重复的 ID （recentIdCsv 最后 iCount 个不重复的 ID）
+            for (int i = recentIds.length-1; i >= 0; i--) {
+                if (addedIds.contains(recentIds[i])) continue; // dedup
+
+                itemsList.add(getItemsById(Integer.parseInt(recentIds[i])));
+
+                addedIds.add(recentIds[i]); // for dedup
+                if (itemsList.size() >= iCount) break;
             }
+
             return itemsList;
         } else {
             return null;

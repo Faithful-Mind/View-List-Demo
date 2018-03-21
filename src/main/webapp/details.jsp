@@ -74,7 +74,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
              </table>
           </td>
           <%
-              String recentCsv ="";
+              String recentIdCsv ="";
               //从客户端获得Cookies集合
               Cookie[] cookies = request.getCookies();
               //遍历这个Cookies集合
@@ -84,22 +84,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	              {
 	                  if(c.getName().equals("ListViewCookie"))
 	                  {
-	                     recentCsv = c.getValue();
+	                     recentIdCsv = c.getValue();
 	                  }
 	              }
 	          }
 
-              recentCsv +=request.getParameter("id")+",";
+              recentIdCsv +=request.getParameter("id")+",";
               //如果浏览记录超过1000条，清零.
-              String[] arr = recentCsv.split(",");
+              String[] arr = recentIdCsv.split(",");
               if(arr!=null&&arr.length>0)
               {
                   if(arr.length>=1000)
                   {
-                      recentCsv ="";
+                      recentIdCsv ="";
                   }
               }
-              Cookie cookie = new Cookie("ListViewCookie", recentCsv);
+              Cookie cookie = new Cookie("ListViewCookie", recentIdCsv);
               response.addCookie(cookie);
 
           %>
@@ -109,7 +109,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <b>您浏览过的商品</b><br>
             <!-- 循环开始 -->
             <%
-                ArrayList<Items> itemList = itemDao.getViewList(recentCsv);
+                ArrayList<Items> itemList = itemDao.getViewList(recentIdCsv);
                 System.out.println("itemList.size="+ itemList.size());
                 session.setAttribute("recentViews", itemList);
 
