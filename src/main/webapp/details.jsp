@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" import="java.util.*" contentType="text/html; charset=utf-8" %>
 <%@ page import="com.imooc.milanlover.jspviewlistdemo.entity.Items"%>
 <%@ page import="com.imooc.milanlover.jspviewlistdemo.dao.ItemsDAO"%>
@@ -54,28 +55,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <% 
              ItemsDAO itemDao = new ItemsDAO();
              Items item = itemDao.getItemsById(Integer.parseInt(request.getParameter("id")));
-             if(item!=null)
-             {
+             request.setAttribute("item", item);
           %>
           <td width="70%" valign="top">
              <table>
                <tr>
-                 <td rowspan="4"><img src="images/<%=item.getPicture()%>" width="200" height="160"/></td>
+                 <td rowspan="4"><img src="images/${item.picture}" width="200" height="160"/></td>
                </tr>
                <tr>
-                 <td><B><%=item.getName() %></B></td> 
+                 <td><B>${item.name}</B></td> 
                </tr>
                <tr>
-                 <td>产地：<%=item.getCity()%></td>
+                 <td>产地：${item.city}</td>
                </tr>
                <tr>
-                 <td>价格：<%=item.getPrice() %>￥</td>
+                 <td>价格：${item.price}￥</td>
                </tr> 
              </table>
           </td>
-          <% 
-            }
-          %>
           <%
               String recentCsv ="";
               //从客户端获得Cookies集合
@@ -108,31 +105,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           %>
           <!-- 浏览过的商品 -->
           <td width="30%" bgcolor="#EEE" align="center">
-             <br>
-             <b>您浏览过的商品</b><br>
-             <!-- 循环开始 -->
-             <%
+            <br>
+            <b>您浏览过的商品</b><br>
+            <!-- 循环开始 -->
+            <%
                 ArrayList<Items> itemList = itemDao.getViewList(recentCsv);
-                if(itemList !=null&& itemList.size()>0 )
-                {
-                   System.out.println("itemList.size="+ itemList.size());
-                   for(Items i: itemList)
-                   {
+                System.out.println("itemList.size="+ itemList.size());
+                session.setAttribute("recentViews", itemList);
 
-             %>
-             <div>
-             <dl>
-               <dt>
-                 <a href="details.jsp?id=<%=i.getId()%>"><img src="images/<%=i.getPicture() %>" width="120" height="90" border="1"/></a>
-               </dt>
-               <dd class="dd_name"><%=i.getName() %></dd> 
-               <dd class="dd_city">产地:<%=i.getCity() %>&nbsp;&nbsp;价格:<%=i.getPrice() %> ￥ </dd> 
-             </dl>
-             </div>
-             <% 
-                   }
-                }
-             %>
+            %>
+            <c:forEach var="i" items="${recentViews}">
+            <div>
+            <dl>
+              <dt>
+                <a href="details.jsp?id=${i.id}"><img src="images/${i.picture}" width="120" height="90" border="1"/></a>
+              </dt>
+              <dd class="dd_name">${i.name}</dd>
+              <dd class="dd_city">产地:${i.city}&nbsp;&nbsp;价格:${i.price} ￥ </dd>
+            </dl>
+            </div>
+            </c:forEach>
              <!-- 循环结束 -->
           </td>
         </tr>
