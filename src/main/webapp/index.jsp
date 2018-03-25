@@ -2,6 +2,7 @@
 <%@ page language="java" import="java.util.*" contentType="text/html; charset=utf-8"%>
 <%@ page import="com.imooc.milanlover.jspviewlistdemo.entity.Items"%>
 <%@ page import="com.imooc.milanlover.jspviewlistdemo.dao.ItemsDAO"%>
+<%@ page import="com.imooc.milanlover.jspviewlistdemo.util.AppCtxUtil" %>
 <%
   String path = request.getContextPath();
   String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -52,8 +53,8 @@
 
         <!-- 商品循环开始 -->
         <%
-          ItemsDAO itemsDao = new ItemsDAO();
-          ArrayList<Items> list = itemsDao.getAllItems();
+          ItemsDAO itemsDao = (ItemsDAO) AppCtxUtil.getBean("itemsDAO");
+          List<Items> list = itemsDao.getAllItems();
           request.setAttribute("list", list);
         %>
         <c:forEach var="item" items="${list}">
