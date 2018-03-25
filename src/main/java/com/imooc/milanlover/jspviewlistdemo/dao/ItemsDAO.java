@@ -23,16 +23,7 @@ public class ItemsDAO {
     /** 根据商品编号，获得商品资料 */
     public Items getItemsById(int id) {
         return jdbcTemplate.queryForObject("SELECT * FROM items WHERE id=?",
-                (rs, rowNum) -> {
-                    Items item = new Items();
-                    item.setId(rs.getInt("id"));
-                    item.setName(rs.getString("name"));
-                    item.setCity(rs.getString("city"));
-                    item.setNumber(rs.getInt("number"));
-                    item.setPrice(rs.getInt("price"));
-                    item.setPicture(rs.getString("picture"));
-                    return item;
-                }, id);
+                new BeanPropertyRowMapper<>(Items.class), id);
     }
 
     /** 获取最近浏览的前五条商品信息 */
