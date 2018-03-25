@@ -1,16 +1,11 @@
 package com.imooc.milanlover.jspviewlistdemo.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.imooc.milanlover.jspviewlistdemo.entity.Items;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 
 /** 商品的业务逻辑类 */
 public class ItemsDAO {
@@ -28,18 +23,15 @@ public class ItemsDAO {
     /** 根据商品编号，获得商品资料 */
     public Items getItemsById(int id) {
         return jdbcTemplate.queryForObject("SELECT * FROM items WHERE id=?",
-                new RowMapper<Items>() {
-                    @Override
-                    public Items mapRow(ResultSet rs, int rowNum) throws SQLException {
-                        Items item = new Items();
-                        item.setId(rs.getInt("id"));
-                        item.setName(rs.getString("name"));
-                        item.setCity(rs.getString("city"));
-                        item.setNumber(rs.getInt("number"));
-                        item.setPrice(rs.getInt("price"));
-                        item.setPicture(rs.getString("picture"));
-                        return item;
-                    }
+                (rs, rowNum) -> {
+                    Items item = new Items();
+                    item.setId(rs.getInt("id"));
+                    item.setName(rs.getString("name"));
+                    item.setCity(rs.getString("city"));
+                    item.setNumber(rs.getInt("number"));
+                    item.setPrice(rs.getInt("price"));
+                    item.setPicture(rs.getString("picture"));
+                    return item;
                 }, id);
     }
 
