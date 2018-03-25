@@ -1,11 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java" import="java.util.*" contentType="text/html; charset=utf-8"%>
-<%@ page import="com.imooc.milanlover.jspviewlistdemo.entity.Items"%>
-<%@ page import="com.imooc.milanlover.jspviewlistdemo.dao.ItemsDAO"%>
-<%@ page import="com.imooc.milanlover.jspviewlistdemo.util.AppCtxUtil" %>
+<%@ page language="java"  contentType="text/html; charset=utf-8"%>
 <%
   String path = request.getContextPath();
   String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+  request.getRequestDispatcher("/homepage").include(request, response);
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -52,11 +50,6 @@
       <td>
 
         <!-- 商品循环开始 -->
-        <%
-          ItemsDAO itemsDao = (ItemsDAO) AppCtxUtil.getBean("itemsDAO");
-          List<Items> list = itemsDao.getAllItems();
-          request.setAttribute("list", list);
-        %>
         <c:forEach var="item" items="${list}">
         <div>
           <dl>

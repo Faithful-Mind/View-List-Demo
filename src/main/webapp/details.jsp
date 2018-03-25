@@ -1,8 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java" import="java.util.*" contentType="text/html; charset=utf-8" %>
-<%@ page import="com.imooc.milanlover.jspviewlistdemo.entity.Items"%>
-<%@ page import="com.imooc.milanlover.jspviewlistdemo.dao.ItemsDAO"%>
-<%@ page import="com.imooc.milanlover.jspviewlistdemo.util.AppCtxUtil" %>
+<%@ page language="java"  contentType="text/html; charset=utf-8" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -53,11 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <table width="750" height="60" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <!-- 商品详情 -->
-          <% 
-             ItemsDAO itemDao = (ItemsDAO) AppCtxUtil.getBean("itemsDAO");
-             Items item = itemDao.getItemsById(Integer.parseInt(request.getParameter("id")));
-             request.setAttribute("item", item);
-          %>
+          <jsp:include page="GetItemDetails.do" />
           <td width="70%" valign="top">
              <table>
                <tr>
@@ -74,47 +67,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                </tr> 
              </table>
           </td>
-          <%
-              String recentIdCsv ="";
-              //从客户端获得Cookies集合
-              Cookie[] cookies = request.getCookies();
-              //遍历这个Cookies集合
-              if(cookies!=null&&cookies.length>0)
-              {
-	              for(Cookie c:cookies)
-	              {
-	                  if(c.getName().equals("ListViewCookie"))
-	                  {
-	                     recentIdCsv = c.getValue();
-	                  }
-	              }
-	          }
-
-              recentIdCsv +=request.getParameter("id")+",";
-              //如果浏览记录超过1000条，清零.
-              String[] arr = recentIdCsv.split(",");
-              if(arr!=null&&arr.length>0)
-              {
-                  if(arr.length>=1000)
-                  {
-                      recentIdCsv ="";
-                  }
-              }
-              Cookie cookie = new Cookie("ListViewCookie", recentIdCsv);
-              response.addCookie(cookie);
-
-          %>
+          <jsp:include page="GetRecentItems.do" />
           <!-- 浏览过的商品 -->
           <td width="30%" bgcolor="#EEE" align="center">
             <br>
             <b>您浏览过的商品</b><br>
             <!-- 循环开始 -->
-            <%
-                ArrayList<Items> itemList = itemDao.getViewList(recentIdCsv);
-                System.out.println("itemList.size="+ itemList.size());
-                session.setAttribute("recentViews", itemList);
-
-            %>
             <c:forEach var="i" items="${recentViews}">
             <div>
             <dl>
