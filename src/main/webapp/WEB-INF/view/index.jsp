@@ -3,7 +3,7 @@
 <%
   String path = request.getContextPath();
   String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-  request.getRequestDispatcher("/homepage").include(request, response);
+//  request.getRequestDispatcher("/homepage").include(request, response);
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -50,11 +50,11 @@
       <td>
 
         <!-- 商品循环开始 -->
-        <c:forEach var="item" items="${list}">
+        <c:forEach var="item" items="${itemList}">
         <div>
           <dl>
             <dt>
-              <a href="details.jsp?id=${item.id}"><img src="images/${item.picture}" width="120" height="90" border="1"/></a>
+              <a href="details?id=${item.id}"><img src="images/${item.picture}" width="120" height="90" border="1"/></a>
             </dt>
             <dd class="dd_name">${item.name}</dd>
             <dd class="dd_city">产地:${item.city}&nbsp;&nbsp;价格:￥ ${item.price}</dd>

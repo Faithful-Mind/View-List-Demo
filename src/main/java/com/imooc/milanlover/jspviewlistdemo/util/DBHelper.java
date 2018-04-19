@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 /**
  * Created by Faithful-Mind on 2018/3/20.
+ * Using Spring DataSource and JdbcTemplate instead.
  */
 public class DBHelper {
     private static final String driver = "com.mysql.jdbc.Driver"; //数据库驱动

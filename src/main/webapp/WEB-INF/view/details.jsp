@@ -50,7 +50,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <table width="750" height="60" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <!-- 商品详情 -->
-          <jsp:include page="GetItemDetails.do" />
           <td width="70%" valign="top">
              <table>
                <tr>
@@ -67,7 +66,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                </tr> 
              </table>
           </td>
-          <jsp:include page="GetRecentItems.do" />
           <!-- 浏览过的商品 -->
           <td width="30%" bgcolor="#EEE" align="center">
             <br>

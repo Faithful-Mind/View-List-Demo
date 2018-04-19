@@ -3,7 +3,7 @@ package com.imooc.milanlover.jspviewlistdemo.entity;
 /**
  * 商品类
  */
-public class Items {
+public class Item {
 
     /** 商品编号 */
     private int id;
