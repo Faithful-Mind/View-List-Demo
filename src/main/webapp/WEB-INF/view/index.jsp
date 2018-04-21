@@ -1,16 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java"  contentType="text/html; charset=utf-8"%>
-<%
-  String path = request.getContextPath();
-  String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-//  request.getRequestDispatcher("/homepage").include(request, response);
-%>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-  <base href="<%=basePath%>">
-
   <title>My JSP 'index.jsp' starting page</title>
   <meta http-equiv="pragma" content="no-cache">
   <meta http-equiv="cache-control" content="no-cache">
@@ -54,7 +47,8 @@
         <div>
           <dl>
             <dt>
-              <a href="details?id=${item.id}"><img src="images/${item.picture}" width="120" height="90" border="1"/></a>
+              <a href="detail/item/${item.id}"><img src="images/${item.picture}" width="120"
+                                                height="90" border="1"/></a>
             </dt>
             <dd class="dd_name">${item.name}</dd>
             <dd class="dd_city">产地:${item.city}&nbsp;&nbsp;价格:￥ ${item.price}</dd>

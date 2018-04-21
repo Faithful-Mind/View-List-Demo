@@ -4,8 +4,8 @@ import com.imooc.milanlover.jspviewlistdemo.dao.ItemDao;
 import com.imooc.milanlover.jspviewlistdemo.entity.Item;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -31,18 +31,19 @@ public class ViewListDemoController {
         return "index";
     }
 
-    @RequestMapping("/details")
-    public String details(Model model, @RequestParam int id, HttpServletRequest req, HttpServletResponse resp) {
+    @RequestMapping("/detail/item/{id}")
+    public String detail(Model model, @PathVariable int id,
+                          HttpServletRequest req, HttpServletResponse resp) {
         Item item = itemDao.getItemsById(id);
         model.addAttribute("item", item);
 
-        recents(req, resp);
+        recents(id, req, resp);
 
-        return "details";
+        return "detail";
     }
 
 //    @RequestMapping("/GetRecentItems.do")
-    public String recents(HttpServletRequest req, HttpServletResponse resp) {
+    public String recents(int id, HttpServletRequest req, HttpServletResponse resp) {
         String recentIdCsv = "";
         //从客户端获得Cookies集合
         Cookie[] cookies = req.getCookies();
@@ -55,7 +56,7 @@ public class ViewListDemoController {
             }
         }
 
-        recentIdCsv += req.getParameter("id") + "_"; // "," is not allowed in cookie 0 version
+        recentIdCsv += id + "_"; // "," is not allowed in cookie 0 version
         //如果浏览记录超过100条，清零.
         String[] arr = recentIdCsv.split("_");
         if (arr != null && arr.length >= 100) {
@@ -66,7 +67,7 @@ public class ViewListDemoController {
 
         List<Item> itemList = itemDao.getViewList(recentIdCsv);
         System.out.println("itemList.size="+ itemList.size());
-        req.getSession().setAttribute("recentViews", itemList);
-        return "details";
+        req.setAttribute("recentViews", itemList);
+        return "detail";
     }
 }
