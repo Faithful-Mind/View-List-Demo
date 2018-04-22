@@ -1,10 +1,8 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java"  contentType="text/html; charset=utf-8" %>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-  <base href="http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/">
+  <base th:href="|http://${#request.serverName}:${#request.serverPort}${#request.contextPath}/|">
 
   <title>My JSP 'details.jsp' starting page</title>
 
@@ -48,16 +46,16 @@
         <td width="70%" valign="top">
            <table>
              <tr>
-               <td rowspan="4"><img src="images/${item.picture}" width="200" height="160"/></td>
+               <td rowspan="4"><img th:src="|images/${item.picture}|" width="200" height="160"/></td>
              </tr>
              <tr>
-               <td><B>${item.name}</B></td>
+               <td><B th:text="${item.name}">${item.name}</B></td>
              </tr>
              <tr>
-               <td>产地：${item.city}</td>
+               <td th:text="|产地：${item.city}|">产地：${item.city}</td>
              </tr>
              <tr>
-               <td>价格：${item.price}￥</td>
+               <td th:text="|价格：${item.price}￥|">价格：${item.price}￥</td>
              </tr>
            </table>
         </td>
@@ -66,17 +64,17 @@
           <br>
           <b>您浏览过的商品</b><br>
           <!-- 循环开始 -->
-          <c:forEach var="i" items="${recentViews}">
-          <div>
+          <div th:each="i : ${recentViews}">
           <dl>
             <dt>
-              <a href="detail/item/${i.id}"><img src="images/${i.picture}" width="120" height="90" border="1" /></a>
+              <a th:href="|detail/item/${i.id}|"><img th:src="|images/${i.picture}|" width="120"
+                                                    height="90" border="1" /></a>
             </dt>
-            <dd class="dd_name">${i.name}</dd>
-            <dd class="dd_city">产地:${i.city}&nbsp;&nbsp;价格:${i.price} ￥ </dd>
+            <dd class="dd_name" th:text="${i.name}">${i.name}</dd>
+            <dd class="dd_city"
+                th:text="|产地:${i.city}&nbsp;&nbsp;价格:${i.price} ￥ |">产地:${i.city}&nbsp;&nbsp;价格:${i.price} ￥ </dd>
           </dl>
           </div>
-          </c:forEach>
            <!-- 循环结束 -->
         </td>
       </tr>

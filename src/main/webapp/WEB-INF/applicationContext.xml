@@ -25,10 +25,20 @@
         <property name="password" value="${password}" />
     </bean>
 
-    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <!-- using Thymeleaf View Resolver - implementation of Spring's ViewResolver interface -->
+    <bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+        <property name="templateEngine" ref="templateEngine" />
+        <property name="characterEncoding" value="UTF-8" />
+    </bean>
+    <!-- Thymeleaf Template Engine (Spring4-specific version) -->
+    <bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+        <property name="templateResolver" ref="templateResolver" />
+    </bean>
+    <!-- Thymeleaf Template Resolver -->
+    <bean id="templateResolver" class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver">
         <property name="prefix" value="/WEB-INF/view/" />
-        <property name="suffix" value=".jsp" />
-        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+        <property name="suffix" value=".html" />
+        <property name="templateMode" value="HTML" />
     </bean>
 
     <!--<context:property-placeholder location="classpath:conn.properties" />-->
