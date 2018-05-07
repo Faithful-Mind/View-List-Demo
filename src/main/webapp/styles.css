@@ -1,0 +1,48 @@
+div.item-list {
+    float: left;
+    margin: 10px;
+}
+
+div.item-list-recent {
+    float: left;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+body > table {
+    margin: auto;
+    width: 750px;
+    height: 60px;
+    border-spacing: 0px;
+    border: 0px;
+}
+
+td {
+    padding: 0px;
+}
+
+div dd {
+    margin: 0px;
+    font-size: 10pt;
+}
+
+div dd.dd_name {
+    color: blue;
+}
+
+div dd.dd_city {
+    color: #000;
+}
+
+.item-list img, .item-list-recent img {
+    width: 120px;
+    height: 90px;
+    border: 1px;
+}
+
+.detail-table img {
+    width: 200px;
+    height: 160px;
+}

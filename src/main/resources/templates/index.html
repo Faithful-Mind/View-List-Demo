@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>My JSP 'index.jsp' starting page</title>
+
+  <meta http-equiv="pragma" content="no-cache" />
+  <meta http-equiv="cache-control" content="no-cache" />
+  <meta http-equiv="expires" content="0" />
+  <meta http-equiv="keywords" content="keyword1,keyword2,keyword3" />
+  <meta http-equiv="description" content="This is my page" />
+
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<body>
+<h1>商品展示</h1>
+<hr />
+<table>
+  <tr>
+    <td>
+      <!-- 商品循环开始 -->
+      <div class="item-list" th:each="item : ${itemList}">
+        <dl>
+          <dt>
+            <a th:href="|detail/item/${item.id}|"><img th:src="|images/${item.picture}|" /></a>
+          </dt>
+          <dd class="dd_name" th:text="${item.name}">${item.name}</dd>
+          <dd class="dd_city" th:text="|产地:${item.city}&nbsp;&nbsp;价格:￥ ${item.price}|">
+            产地:${item.city}&nbsp;&nbsp;价格:￥ ${item.price}</dd>
+        </dl>
+      </div>
+      <!-- 商品循环结束 -->
+    </td>
+  </tr>
+</table>
+</body>
+</html>

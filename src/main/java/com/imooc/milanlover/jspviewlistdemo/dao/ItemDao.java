@@ -6,8 +6,10 @@ import java.util.List;
 import com.imooc.milanlover.jspviewlistdemo.entity.Item;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 
 /** 商品的业务逻辑类 */
+@Component
 public class ItemDao {
     private JdbcTemplate jdbcTemplate;
 

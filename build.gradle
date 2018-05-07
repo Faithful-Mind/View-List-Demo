@@ -1,9 +1,24 @@
-group 'com.imooc.milanlover'
-version '0.1.0-SNAPSHOT'
+buildscript {
+    ext {
+        springBootVersion = '2.0.1.RELEASE'
+    }
+    repositories {
+        mavenLocal()
+        maven {url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
 
 apply plugin: 'war'
-apply from: 'https://raw.github.com/gretty-gradle-plugin/gretty/master/pluginScripts/gretty.plugin'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 
+group = 'com.imooc.milanlover'
+version = '0.1.0-SNAPSHOT'
 compileJava.options.encoding = "UTF-8"
 
 repositories {
@@ -13,20 +28,14 @@ repositories {
     mavenCentral()
 }
 
-ext {
-    springVersion = '4.3.14.RELEASE'
-    thymeleafVersion = '3.0.9.RELEASE'
-}
 
 dependencies {
-    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-jdbc'
+    compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
-    compile 'mysql:mysql-connector-java:5.1.46'
-    compile "org.springframework:spring-webmvc:$springVersion"
-    compile "org.springframework:spring-jdbc:${springVersion}"
-    compile "org.thymeleaf:thymeleaf-spring4:$thymeleafVersion"
-
-    testCompile group: 'junit', name: 'junit', version: '4.11'
+    runtime 'mysql:mysql-connector-java'
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
 }
 
 //gretty {
