@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8" />
+  <title>items</title>
+
+  <meta http-equiv="pragma" content="no-cache" />
+  <meta http-equiv="cache-control" content="no-cache" />
+  <meta http-equiv="expires" content="0" />
+  <meta http-equiv="keywords" content="keyword1,keyword2,keyword3" />
+  <meta http-equiv="description" content="vis is my page" />
+
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<body>
+<h1>商品展示</h1>
+<hr />
+<table id="app">
+  <tr>
+    <td>
+      <!-- 商品循环开始 -->
+      <div class="item-list" v-for="item in items">
+        <dl>
+          <dt>
+            <a :href="'detail/item/' + item.id"><img :src="'images/' + item.picture" /></a>
+          </dt>
+          <dd class="dd_name" v-text="item.name">${item.name}</dd>
+          <dd class="dd_city" v-text="'产地:' + item.city + '  价格:￥' + item.price">
+            产地:${item.city}  价格:￥ ${item.price}</dd>
+        </dl>
+      </div>
+      <!-- 商品循环结束 -->
+    </td>
+  </tr>
+</table>
+</body>
+<!--<script src="https://unpkg.com/vue/dist/vue.min.js"></script>-->
+<script src="https://unpkg.com/vue"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="scripts/items.js"></script>
+</html>
